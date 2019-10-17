@@ -3,9 +3,14 @@
 
 package io_prometheus_client // import "github.com/prometheus/client_model/go"
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	"fmt"
+	"strconv"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -147,6 +152,22 @@ func (m *Gauge) GetValue() float64 {
 	return 0
 }
 
+func (m *Gauge) GetStringValue() string {
+	if m != nil && m.Value != nil {
+		switch *m.Value {
+		case 0:
+			return "0"
+		case 1:
+			return "1"
+		case -1:
+			return "-1"
+		default:
+			return strconv.FormatFloat(*m.Value, 'f', -1, 64)
+		}
+	}
+	return ""
+}
+
 type Counter struct {
 	Value                *float64 `protobuf:"fixed64,1,opt,name=value" json:"value,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -183,6 +204,22 @@ func (m *Counter) GetValue() float64 {
 		return *m.Value
 	}
 	return 0
+}
+
+func (m *Counter) GetStringValue() string {
+	if m != nil && m.Value != nil {
+		switch *m.Value {
+		case 0:
+			return "0"
+		case 1:
+			return "1"
+		case -1:
+			return "-1"
+		default:
+			return strconv.FormatFloat(*m.Value, 'f', -1, 64)
+		}
+	}
+	return ""
 }
 
 type Quantile struct {

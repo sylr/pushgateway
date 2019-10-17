@@ -108,10 +108,10 @@ limitations under the License.
 			  </td>
 			  <td>
 			    {{- with .Gauge}}
-			    {{- value .GetValue}}
+			    {{- .GetStringValue}}
 			    {{- else}}
 			    {{- with .Counter}}
-			    {{- value .GetValue}}
+			    {{- .GetStringValue}}
 			    {{- else}}
 			    {{- with .Untyped}}
 			    {{- value .GetValue}}
